@@ -5,7 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # Page Config
 st.set_page_config(
-    page_title="District Training Center Software",
+    page_title="District Training Team Software",
     page_icon="🏛️",
     layout="wide",
     initial_sidebar_state="expanded"
