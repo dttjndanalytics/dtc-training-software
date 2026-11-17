@@ -862,3 +862,7 @@ elif main_module == "5. About Us":
 # ==========================================
 elif main_module == "6. Interactive Mock Exams":
     render_mock_exams_module()
+# ==========================================
+# --- MODULE 7: Admin Knowledge Bank ---
+# ==========================================
+elif main_module == "7. Admin Knowledge Bank":
