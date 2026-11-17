@@ -862,4 +862,126 @@ elif main_module == "5. About Us":
 # ==========================================
 elif main_module == "6. Interactive Mock Exams":
     render_mock_exams_module()
-
+# ==========================================
+# --- MODULE 7: ADMIN KNOWLEDGE BANK ---
+# ==========================================
+elif main_module == "7. Admin Knowledge Bank":
+    st.title("📂 Admin Knowledge Bank (Government Resolutions)")
+    st.markdown("Repository of official Government Resolutions (GRs), circulars, and administrative guidelines categorized for quick access.")
+    
+    # Submodule selection using radio buttons
+    admin_sub_tab = st.radio(
+        "Select Administrative Section", 
+        ["Financial GR", "Leave GR"], 
+        horizontal=True
+    )
+    
+    st.markdown("---")
+    
+    if admin_sub_tab == "Financial GR":
+        st.subheader("💰 Financial Government Resolutions (GRs)")
+        st.markdown("Access official circulars regarding training allowances, TA/DA rules, budget sanctions, and expenditure guidelines.")
+        
+        # Search filter
+        fin_search = st.text_input("🔍 Search Financial GRs by Title, Date, or Category:", "")
+        
+        # Sample Financial GR Registry (You can replace or connect this to a Google Sheet / Database)
+        financial_grs = [
+            {
+                "sr_no": 1, 
+                "title": "Training Honorarium, TA/DA, and Refreshment Expense Revision Guidelines", 
+                "date": "15-Jan-2025", 
+                "category": "Honorarium & TA/DA", 
+                "link": "https://docs.google.com/spreadsheets/d/your_financial_gr_sheet_link"
+            },
+            {
+                "sr_no": 2, 
+                "title": "District Training Center (DTC) Annual Financial Allocation & Utilization Rules", 
+                "date": "10-Jul-2024", 
+                "category": "Budget Sanction", 
+                "link": "https://docs.google.com/spreadsheets/d/your_financial_gr_sheet_link"
+            },
+            {
+                "sr_no": 3, 
+                "title": "Procurement and Expense Sourcing Guidelines for Health Department Training Programs", 
+                "date": "22-Nov-2023", 
+                "category": "Procurement", 
+                "link": "https://docs.google.com/spreadsheets/d/your_financial_gr_sheet_link"
+            }
+        ]
+        
+        df_fin = pd.DataFrame(financial_grs)
+        
+        if fin_search:
+            df_fin = df_fin[
+                df_fin.astype(str).apply(
+                    lambda row: row.str.contains(fin_search, case=False).any(), axis=1
+                )
+            ]
+        
+        if not df_fin.empty:
+            for _, row in df_fin.iterrows():
+                with st.container():
+                    col_f1, col_f2 = st.columns([4, 1])
+                    with col_f1:
+                        st.markdown(f"**{row['sr_no']}. {row['title']}**")
+                        st.caption(f"📅 Date: {row['date']} &nbsp;|&nbsp; 📁 Category: `{row['category']}`")
+                    with col_f2:
+                        st.markdown(f"[📥 View / Download GR]({row['link']})", unsafe_allow_html=True)
+                    st.divider()
+        else:
+            st.info("No matching Financial GRs found.")
+            
+    elif admin_sub_tab == "Leave GR":
+        st.subheader("🏖️ Leave Government Resolutions (GRs)")
+        st.markdown("Access official rules regarding Casual Leave (CL), Earned Leave (EL), Medical Leave, Maternity/Paternity Leave, and Child Care Leave (CCL).")
+        
+        # Search filter
+        leave_search = st.text_input("🔍 Search Leave GRs by Title, Date, or Category:", "")
+        
+        # Sample Leave GR Registry
+        leave_grs = [
+            {
+                "sr_no": 1, 
+                "title": "Child Care Leave (CCL) Policy Update and Sanctioning Procedure for Female Employees", 
+                "date": "12-Mar-2024", 
+                "category": "Child Care Leave", 
+                "link": "https://docs.google.com/spreadsheets/d/your_leave_gr_sheet_link"
+            },
+            {
+                "sr_no": 2, 
+                "title": "Consolidated Rules on Earned Leave (EL) Accumulation and Encashment Guidelines", 
+                "date": "05-Sep-2023", 
+                "category": "Earned Leave", 
+                "link": "https://docs.google.com/spreadsheets/d/your_leave_gr_sheet_link"
+            },
+            {
+                "sr_no": 3, 
+                "title": "Medical Leave Certificate Requirements, Commuted Leave, and Competent Authority", 
+                "date": "18-Jan-2023", 
+                "category": "Medical Leave", 
+                "link": "https://docs.google.com/spreadsheets/d/your_leave_gr_sheet_link"
+            }
+        ]
+        
+        df_leave = pd.DataFrame(leave_grs)
+        
+        if leave_search:
+            df_leave = df_leave[
+                df_leave.astype(str).apply(
+                    lambda row: row.str.contains(leave_search, case=False).any(), axis=1
+                )
+            ]
+        
+        if not df_leave.empty:
+            for _, row in df_leave.iterrows():
+                with st.container():
+                    col_l1, col_l2 = st.columns([4, 1])
+                    with col_l1:
+                        st.markdown(f"**{row['sr_no']}. {row['title']}**")
+                        st.caption(f"📅 Date: {row['date']} &nbsp;|&nbsp; 📁 Category: `{row['category']}`")
+                    with col_l2:
+                        st.markdown(f"[📥 View / Download GR]({row['link']})", unsafe_allow_html=True)
+                    st.divider()
+        else:
+            st.info("No matching Leave GRs found.")
